@@ -1,0 +1,18 @@
+diff --git a/Linux/Makefile b/Linux/Makefile
+index 63b1341..514ee19 100644
+--- a/Linux/Makefile
++++ b/Linux/Makefile
+@@ -17,10 +17,12 @@ MAN	= sscep.8
+ PROG	= sscep
+ OBJS    = sscep.o init.o net.o sceputils.o pkcs7.o ias.o fileutils.o configuration.o engine.o
+ 
++STATIC_LIBS = $(OPENSSL)/libcrypto.a /lib/libz.a
++
+ all: $(PROG)_static $(PROG)_dyn
+ 
+ $(PROG)_static: $(OBJS)
+-	$(CC) $(CFLAGS) -o $(PROG)_static $(OBJS) $(OPENSSL)/libcrypto.a -ldl
++	$(CC) $(CFLAGS) -static -o $(PROG)_static $(OBJS) $(STATIC_LIBS) -ldl
+ 
+ $(PROG)_dyn: $(OBJS)
+ 	$(CC) $(CFLAGS) -o $(PROG)_dyn $(OBJS) $(LDLIBS) $(LDFLAGS)
